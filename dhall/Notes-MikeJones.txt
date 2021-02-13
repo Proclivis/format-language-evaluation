@@ -1,0 +1,7 @@
+Comments
+
+- composition_operation_steps_order items are not type checked because items are strings rather than values
+- Running dhall on device-ltc3887.dhall give unhelpful user messages about types and line number pointing to any particular line
+	. It took awhile to realize there was an outer file that included it
+- Node hierarchy can be confusing without end of section markers when the nesting is so deep
+- Many places use strings like "write_byte" and the dhall compiler can't check for legal values

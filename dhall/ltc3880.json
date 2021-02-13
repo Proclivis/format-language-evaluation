@@ -1,0 +1,229 @@
+{
+  "description": "OpenBMC Router",
+  "name": "OBMC Router System",
+  "operations": {
+    "rail1Configuration": {
+      "composition_operation_steps": {
+        "disableCheck": {
+          "channel": "/dev/i2c0",
+          "description": "Configure device.",
+          "operation_error_handling": "break_on_error",
+          "operation_type": "smbus_operation",
+          "smbus_address": 32,
+          "smbus_operation_steps": [
+            [
+              "0x01",
+              "read_byte",
+              "null",
+              "0x00",
+              "0x80",
+              "false"
+            ]
+          ],
+          "smbus_operation_structure": [
+            "command_code",
+            "transaction_type",
+            "write_data",
+            "expect_data",
+            "and_mask",
+            "use_pec"
+          ]
+        },
+        "recover": {
+          "channel": "/dev/i2c0",
+          "description": "Recover devices.",
+          "operation_error_handling": "break_on_error",
+          "operation_type": "smbus_operation",
+          "smbus_address": 91,
+          "smbus_operation_steps": [
+            [
+              "0xE6",
+              "write_byte",
+              "0x4F",
+              "true"
+            ],
+            [
+              "0x15",
+              "send_byte",
+              "0x06",
+              "true"
+            ],
+            [
+              "0x10",
+              "send_byte",
+              "0x00",
+              "false"
+            ]
+          ],
+          "smbus_operation_structure": [
+            "command_code",
+            "transaction_type",
+            "write_data",
+            "use_pec"
+          ]
+        },
+        "writeConfig": {
+          "channel": "/dev/i2c0",
+          "description": "Configure device.",
+          "operation_error_handling": "break_on_error",
+          "operation_type": "smbus_operation",
+          "smbus_address": 32,
+          "smbus_operation_steps": [
+            [
+              "0x01",
+              "write_byte",
+              "0x80",
+              "false"
+            ],
+            [
+              "0x02",
+              "write_byte",
+              "00",
+              "false"
+            ],
+            [
+              "null",
+              "delay_in_ms",
+              "10",
+              "false"
+            ]
+          ],
+          "smbus_operation_structure": [
+            "command_code",
+            "transaction_type",
+            "write_data",
+            "use_pec"
+          ]
+        }
+      },
+      "composition_operation_steps_order": [
+        "recover",
+        "disableCheck",
+        "writeConfig"
+      ],
+      "description": "Configure Rail 1 (ltc3887)",
+      "operation_type": "composition"
+    },
+    "rail1ConfigureAndVerify": {
+      "composition_operation_steps": {
+        "rail1Configuration": {
+          "composition_operation_steps": {
+            "disableCheck": {
+              "channel": "/dev/i2c0",
+              "description": "Configure device.",
+              "operation_error_handling": "break_on_error",
+              "operation_type": "smbus_operation",
+              "smbus_address": 32,
+              "smbus_operation_steps": [
+                [
+                  "0x01",
+                  "read_byte",
+                  "null",
+                  "0x00",
+                  "0x80",
+                  "false"
+                ]
+              ],
+              "smbus_operation_structure": [
+                "command_code",
+                "transaction_type",
+                "write_data",
+                "expect_data",
+                "and_mask",
+                "use_pec"
+              ]
+            },
+            "recover": {
+              "channel": "/dev/i2c0",
+              "description": "Recover devices.",
+              "operation_error_handling": "break_on_error",
+              "operation_type": "smbus_operation",
+              "smbus_address": 91,
+              "smbus_operation_steps": [
+                [
+                  "0xE6",
+                  "write_byte",
+                  "0x4F",
+                  "true"
+                ],
+                [
+                  "0x15",
+                  "send_byte",
+                  "0x06",
+                  "true"
+                ],
+                [
+                  "0x10",
+                  "send_byte",
+                  "0x00",
+                  "false"
+                ]
+              ],
+              "smbus_operation_structure": [
+                "command_code",
+                "transaction_type",
+                "write_data",
+                "use_pec"
+              ]
+            },
+            "writeConfig": {
+              "channel": "/dev/i2c0",
+              "description": "Configure device.",
+              "operation_error_handling": "break_on_error",
+              "operation_type": "smbus_operation",
+              "smbus_address": 32,
+              "smbus_operation_steps": [
+                [
+                  "0x01",
+                  "write_byte",
+                  "0x80",
+                  "false"
+                ],
+                [
+                  "0x02",
+                  "write_byte",
+                  "00",
+                  "false"
+                ],
+                [
+                  "null",
+                  "delay_in_ms",
+                  "10",
+                  "false"
+                ]
+              ],
+              "smbus_operation_structure": [
+                "command_code",
+                "transaction_type",
+                "write_data",
+                "use_pec"
+              ]
+            }
+          },
+          "composition_operation_steps_order": [
+            "recover",
+            "disableCheck",
+            "writeConfig"
+          ],
+          "description": "Configure Rail 1 (ltc3887)",
+          "operation_type": "composition"
+        },
+        "rail1Verify": {
+          "channel": "/dev/i2c0",
+          "description": "Verify Rail 1 (ltc3887)"
+        }
+      },
+      "composition_operation_steps_order": [
+        "rail1Configuration",
+        "rail1Verify"
+      ],
+      "description": "Configure & Verify Rail 1",
+      "operation_type": "composition"
+    },
+    "rail1Verify": {
+      "channel": "/dev/i2c0",
+      "description": "Verify Rail 1 (ltc3887)"
+    }
+  },
+  "revision": "A"
+}
